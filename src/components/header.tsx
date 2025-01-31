@@ -1,44 +1,35 @@
-import React from "react";
-import { Button } from "./ui/button";
-import { Github, Moon } from "lucide-react";
-function Header() {
-  return (
-    <div className="pb-20">
-      <div className="sm:container fixed w-full z-[100]   sm:left-0 sm:right-0 sm:z-10  sm:top-5 ">
-        <div>
-          <div className="border-black/20 flex justify-between sm:rounded-sm px-3 py-2 w-full bg-white/65 backdrop-blur-sm border-b  sm:border ">
-            <div>Header</div>
+"use client";
 
-            <div className="flex gap-2">
-              <Button
-                variant={"outline"}
-                size={"icon"}
-                className="ratio-[1/1] p-1"
-              >
-                <Github />
-              </Button>
-              <Button
-                variant={"outline"}
-                size={"icon"}
-                className="ratio-[1/1] p-1"
-              >
-                <Moon />
-              </Button>
-              <select className="border px-2 rounded-sm" name="" id="">
-                {menus.map((menu, index) => (
-                  <option className="hover:bg-black" key={index} value={menu}>
-                    {menu}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+import React, { useState } from "react";
+import { Tabs } from "./ui/tabs";
+
+function Header() {
+  const [activeTab, setActiveTab] = useState("ansub");
+
+  const tabs = [
+    { id: "hello", label: "_hello" },
+    { id: "aboutMe", label: "_about-me" },
+    { id: "projects", label: "_projects" },
+  ];
+
+  const handleTabClick = (tabId: string) => {
+    setActiveTab(tabId);
+  };
+  return (
+    <div className="flex border-b divide-x">
+      <div className="px-5 py-3">
+        <h3 className="text-main">khusan-mirobidov</h3>
+      </div>
+      <div className="flex justify-between flex-shrink-0 flex-grow divide-x">
+        <div className="flex divide-x">
+          <Tabs tabs={tabs} activeTab={activeTab} onTabClick={handleTabClick} />
+        </div>
+        <div className="px-5 py-3">
+          <h3 className="text-main">_contact-me</h3>
         </div>
       </div>
     </div>
   );
 }
-
-const menus = ["UZ", "EN", "RU"];
 
 export default Header;

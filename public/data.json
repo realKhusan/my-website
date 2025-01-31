@@ -1,0 +1,18 @@
+{
+  "socialLinks": {
+    "facebook": "https://www.facebook.com/your-facebook",
+    "twitter": "https://www.twitter.com/your-twitter",
+    "instagram": "https://www.instagram.com/your-instagram",
+    "linkedin": "https://www.linkedin.com/your-linkedin",
+    "github": "https://www.github.com/your-github"
+  },
+  "fullName": {
+    "firstName": "Khusan",
+    "lastName": "Mirobidov"
+  },
+  "email": "husanmirobidov@gmail.com",
+  "phone": {
+    "code": "+998",
+    "number": "99 856 05 42"
+  }
+}

@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  darkMode: ["class"],
+  darkMode: "selector",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,6 +11,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        main: "#a855f7",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
