@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 type Tab = {
   id: string;
   label: string;
@@ -12,17 +14,15 @@ type TabProps = {
 const Tab = ({ label, isActive, onClick }: TabProps) => {
   return (
     <div
-      className={`
-        ${
-          isActive
-            ? "border-b-[3px] border-b-purple-500 pb-2  "
-            : "cursor-pointer hover:bg-white/10 text-white/50"
-        }
-        text-decoration-none transition-all flex items-center h-full   px-5 py-3 text-sm font-medium 
-      `}
+      className={clsx(
+        isActive
+          ? "border-b-[3px] border-b-purple-500 pb-2"
+          : "cursor-pointer hover:bg-white/10 text-white/50",
+        "transition-all flex items-center h-full px-5 py-3 text-sm font-medium"
+      )}
       onClick={onClick}
     >
-      <h3> {label}</h3>
+      <h3>{label}</h3>
     </div>
   );
 };
