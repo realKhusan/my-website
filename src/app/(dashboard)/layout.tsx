@@ -81,7 +81,7 @@ export default function DashboardLayout({
       </ResizablePanel>
       <ResizableHandle withHandle />
       <ResizablePanel defaultSize={80} minSize={80}>
-        <div className="p-3">{children}</div>
+        <div className="h-full">{children}</div>
       </ResizablePanel>
     </ResizablePanelGroup>
   );

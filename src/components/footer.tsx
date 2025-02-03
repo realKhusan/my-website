@@ -1,6 +1,5 @@
 import { Github, Twitter } from "lucide-react";
 import React from "react";
-import data from "../../public/data.json";
 function Footer() {
   return (
     <div className="flex border-t divide-x text-purple-500">
@@ -8,13 +7,13 @@ function Footer() {
         <h3>find me in :</h3>
       </div>
       <div className="flex justify-between  h-fullflex-shrink-0 flex-grow divide-x">
-        {socialData.map((item) => {
+        {/* {socialData.map((item) => {
           return (
             <div key={item.key} className="px-5 py-3">
               <h3>{item.name}</h3>
             </div>
           );
-        })}
+        })} */}
         <div className="flex divide-x h-full">
           <Twitter className="mx-3 h-full" />
           <Twitter className="mx-3 h-full" />
@@ -31,4 +30,4 @@ function Footer() {
 
 export default Footer;
 
-const socialData = [{}];
+// const socialData = [{}];
