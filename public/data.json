@@ -4,7 +4,15 @@
     "twitter": "https://www.twitter.com/your-twitter",
     "instagram": "https://www.instagram.com/your-instagram",
     "linkedin": "https://www.linkedin.com/your-linkedin",
-    "github": "https://www.github.com/your-github"
+    "github": "https://www.github.com/your-github",
+    "telegram": "https://www.t.me/your-telegram",
+    "leetCode": "https://www.leetcode.com/your-leetCode",
+    "telegramChannael": "https://www.t.me/your-telegramChannael",
+    "medium": "https://www.medium.com/your-medium",
+    "tumblr": "https://www.tumblr.com/your-tumblr",
+    "pinterest": "https://www.pinterest.com/your-pinterest",
+    "mastodon": "https://www.mastodon.com/your-mastodon",
+    "twitch": "https://www.twitch.com/your-twitch"
   },
   "fullName": {
     "firstName": "Khusan",
