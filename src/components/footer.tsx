@@ -33,7 +33,7 @@ function Footer() {
                     </div>
                   </HoverCardTrigger>
                   <HoverCardContent className="w-80">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between mb-3">
                       <div className="flex gap-2">
                         <Avatar>
                           <AvatarImage src={item.imageUlr} />

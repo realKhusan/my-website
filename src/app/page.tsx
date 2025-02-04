@@ -3,7 +3,7 @@ import { socialLink } from "@/constants/data";
 import Image from "next/image";
 export default function Hello() {
   return (
-    <div className="container relative  grid grid-cols-1 lg:grid-cols-2 items-center h-full">
+    <div className="container relative   grid grid-cols-1 lg:grid-cols-2 items-center h-full">
       <Image
         src="/assets/hello_page/green.svg"
         width={800}
