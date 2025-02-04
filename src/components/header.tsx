@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Tabs } from "./ui/tabs";
 import { usePathname, useRouter } from "next/navigation";
 import { useScreenSize } from "@/hooks/use-screen-size";
-import data from "../../public/data.json";
+import { myData } from "@/constants/data";
 function Header() {
   const router = useRouter();
   const pathname = usePathname();
@@ -38,7 +38,7 @@ function Header() {
     <div className="flex border-b divide-x">
       <div className="px-5 py-3">
         <h3 className="text-main text-nowrap lowercase">
-          {data.fullName.firstName}-{data.fullName.lastName}
+          {myData.fullName.firstName}-{myData.fullName.lastName}
         </h3>
       </div>
       <Tabs tabs={tabs} activeTab={activeTab} onTabClick={handleTabClick} />
