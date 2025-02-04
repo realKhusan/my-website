@@ -7,8 +7,6 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import CodeBlock from "@/components/ui/code-block";
 import { z } from "zod";
@@ -20,11 +18,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from "@/components/ui/form/form";
 import { useForm } from "react-hook-form";
 
 import dayjs from "dayjs";
 import { useToast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/form/input";
+import { Textarea } from "@/components/ui/form/textarea";
 const FormSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",

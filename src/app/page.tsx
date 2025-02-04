@@ -1,4 +1,4 @@
-export default function Home() {
+export default function Hello() {
   return (
     <div className="container grid grid-cols-1 lg:grid-cols-2 items-center h-full">
       <div>
