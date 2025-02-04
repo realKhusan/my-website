@@ -2,51 +2,67 @@ export const socialLink = {
   facebook: {
     url: "https://www.facebook.com/your-facebook",
     username: "realKhusan",
+    joined: 2020,
   },
   twitter: {
     url: "https://www.twitter.com/your-twitter",
     username: "realKhusan",
+    joined: 2020,
   },
   instagram: {
     url: "https://www.instagram.com/your-instagram",
     username: "realKhusan",
+    joined: 2020,
   },
   linkedin: {
     url: "https://www.linkedin.com/khusan-mirobidov",
     username: "realKhusan",
+    joined: 2020,
   },
   github: {
     url: "https://www.github.com/realKhusan",
     username: "realKhusan",
+    joined: 2020,
   },
-  telegram: { url: "https://www.t.me/realKhusan", username: "realKhusan" },
+  telegram: {
+    url: "https://www.t.me/realKhusan",
+    username: "realKhusan",
+    joined: 2020,
+  },
   leetCode: {
     url: "https://www.leetcode.com/your-leetCode",
     username: "realKhusan",
+    joined: 2020,
   },
   telegramChannael: {
     url: "https://www.t.me/your-telegramChannael",
     username: "realKhusan",
+    joined: 2020,
   },
   medium: {
     url: "https://www.medium.com/your-medium",
     username: "realKhusan",
+    joined: 2020,
   },
   tumblr: {
     url: "https://www.tumblr.com/your-tumblr",
     username: "realKhusan",
+    joined: 2020,
   },
   pinterest: {
     url: "https://www.pinterest.com/your-pinterest",
     username: "realKhusan",
+    joined: 2020,
   },
   mastodon: {
     url: "https://www.mastodon.com/your-mastodon",
     username: "realKhusan",
+    joined: 2020,
   },
   twitch: {
     url: "https://www.twitch.com/your-twitch",
     username: "realKhusan",
+    joined: 2020,
   },
 };
 export const myData = {
