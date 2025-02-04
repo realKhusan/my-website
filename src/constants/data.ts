@@ -28,6 +28,7 @@ export const socialLink = {
     url: "https://www.t.me/realKhusan",
     username: "realKhusan",
     joined: 2020,
+    id: 896560162,
   },
   leetCode: {
     url: "https://www.leetcode.com/your-leetCode",

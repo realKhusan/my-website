@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Tabs } from "./ui/tabs";
 import { usePathname, useRouter } from "next/navigation";
-import { useScreenSize } from "@/hooks/use-screen-size";
 import { myData } from "@/constants/data";
 function Header() {
   const router = useRouter();
   const pathname = usePathname();
-  const screenSize = useScreenSize();
   const [activeTab, setActiveTab] = useState(pathname);
   const tabs = useMemo(
     () => [
@@ -23,13 +21,7 @@ function Header() {
     ],
     []
   );
-  useEffect(() => {
-    setActiveTab(pathname);
-  }, [pathname]);
-  useEffect(() => {}, [screenSize]);
 
-  console.log(pathname, "pathname");
-  console.log(screenSize, "breakpoint");
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId);
     router.push(`${tabId}`);

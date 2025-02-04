@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useEffect, useState } from "react";
-import { fetchUserContributions } from "../../utils/github-api";
+import { fetchUserContributions } from "../../../utils/github-api";
 import {
   Select,
   SelectContent,
@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/form/select";
+import dayjs from "dayjs";
 
 interface ContributionDay {
   contributionCount: number;
@@ -30,7 +31,7 @@ interface GitHubActivityCalendarProps {
   username: string;
 }
 
-const colorLevels = ["#13171A", "#9be9a8", "#40c463", "#30a14e", "#216e39"];
+const colorLevels = ["#13171A", "#0e4429", "#006d32", "#26a641", "#39d353"];
 const monthNames = [
   "Yan",
   "Fev",
@@ -70,9 +71,9 @@ const GitHubActivityCalendar: React.FC<GitHubActivityCalendarProps> = ({
 
   const getColor = (count: number) => {
     if (count === 0) return colorLevels[0];
-    if (count < 1) return colorLevels[1];
-    if (count < 2) return colorLevels[2];
-    if (count < 3) return colorLevels[3];
+    if (count < 2) return colorLevels[1];
+    if (count < 3) return colorLevels[2];
+    if (count < 4) return colorLevels[3];
     return colorLevels[4];
   };
 
@@ -136,7 +137,7 @@ const GitHubActivityCalendar: React.FC<GitHubActivityCalendarProps> = ({
   return (
     <div className="w-full max-w-6xl border bg-black p-4 rounded-lg">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">GitHub Faoliyat Jadvali</h2>
+        <h2 className="text-xl font-bold">GitHub activity calendar</h2>
         <Select
           value={selectedYear.toString()}
           onValueChange={(value) => setSelectedYear(Number.parseInt(value))}
@@ -157,8 +158,12 @@ const GitHubActivityCalendar: React.FC<GitHubActivityCalendarProps> = ({
         </Select>
       </div>
       <div className="overflow-x-auto">{renderCalendar()}</div>
-      {renderLegend()}
-      <div className="mt-4">Jami hissalar: {calendar.totalContributions}</div>
+      <div className="flex justify-between">
+        <div className="mt-4">
+          {calendar.totalContributions} contributions in {dayjs().year()}
+        </div>
+        {renderLegend()}
+      </div>
     </div>
   );
 };

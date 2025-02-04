@@ -1,8 +1,6 @@
-import GitHubActivityCalendar from "@/components/gitHubActivityCalendar";
 import { myData } from "@/constants/data";
 import { socialLink } from "@/constants/data";
 export default function Hello() {
-  const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN || "";
   return (
     <div className="container grid grid-cols-1 lg:grid-cols-2 items-center h-full">
       <div>
@@ -30,9 +28,7 @@ export default function Hello() {
           );
         })}
       </div>
-      <div className="flex justify-center items-center h-full">
-        <GitHubActivityCalendar token={GITHUB_TOKEN} username="realKhusan" />
-      </div>
+      <div className="flex justify-center items-center h-full"></div>
     </div>
   );
 }
