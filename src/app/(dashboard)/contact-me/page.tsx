@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -38,6 +38,7 @@ const FormSchema = z.object({
 });
 
 function ContactMe() {
+  const [isSendMessage, setIsSendMessage] = useState(false);
   const { toast } = useToast();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -57,6 +58,7 @@ function ContactMe() {
         </pre>
       ),
     });
+    setIsSendMessage(true);
     form.reset();
   }
 
@@ -76,51 +78,69 @@ button.addEventListener('click', () => {
   return (
     <ResizablePanelGroup direction="horizontal" className="min-h-full   w-full">
       <ResizablePanel defaultSize={45}>
-        <div className=" p-5 !max-h-[400px] mt-[100px]">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>_name</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>_email</FormLabel>
-                    <FormControl>
-                      <Input type="email" id="email" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="messageI"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>_message</FormLabel>
-                    <FormControl>
-                      <Textarea id="message" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit">Submit</Button>
-            </form>
-          </Form>
+        <div className="p-5 mx-auto h-full  max-w-[400px] ">
+          {isSendMessage ? (
+            <div className="text-center h-full flex gap-5 flex-col justify-center items-center">
+              <h1 className="text-3xl ">Thank you! 🤘 </h1>
+              <h2 className="text-lg">
+                Your message has been accepted. You will recieve answer really
+                soon!
+              </h2>
+              <Button onClick={() => setIsSendMessage(false)}>
+                send-new-message
+              </Button>
+            </div>
+          ) : (
+            <div className="mt-[100px]">
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-5 w-full"
+                >
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>_name</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>_email</FormLabel>
+                        <FormControl>
+                          <Input type="email" id="email" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="messageI"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>_message</FormLabel>
+                        <FormControl>
+                          <Textarea id="message" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit">Submit</Button>
+                </form>
+              </Form>
+            </div>
+          )}
         </div>
       </ResizablePanel>
       <ResizableHandle />
