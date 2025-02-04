@@ -13,7 +13,9 @@ import GitHubActivityCalendar from "./ui/gitHubActivityCalendar";
 import { Button } from "./ui/button";
 function Footer() {
   const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN || "";
-
+  const fallBackName = `${myData.fullName.firstName.at(
+    0
+  )}${myData.fullName.lastName.at(0)}`;
   return (
     <div className="flex border-t divide-x">
       <div className="px-5 py-3">
@@ -31,16 +33,24 @@ function Footer() {
                     </div>
                   </HoverCardTrigger>
                   <HoverCardContent className="w-80">
-                    <div className="flex justify-between space-x-4">
-                      <div className="space-y-1">
-                        <h4 className="text-sm font-semibold">
-                          @{item.username}
-                        </h4>
-                        <p className="text-sm">
-                          The React Framework – created and maintained by
-                          @vercel.
-                        </p>
+                    <div className="flex justify-between">
+                      <div className="flex gap-2">
+                        <Avatar>
+                          <AvatarImage src={item.imageUlr} />
+                          <AvatarFallback>{fallBackName}</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <h4 className="text-sm text-white">
+                            {socialLink.github.username}
+                          </h4>
+                          <h3>{item.name}</h3>
+                        </div>
                       </div>
+                      <Button>Visit</Button>
+                    </div>
+
+                    <div className="flex justify-between space-x-4">
+                      <p className="text-sm">{item.bio}</p>
                     </div>
                   </HoverCardContent>
                 </HoverCard>
@@ -64,10 +74,7 @@ function Footer() {
                       src={`https://github.com/${socialLink.github.username}.png`}
                       alt="gtihub image"
                     />
-                    <AvatarFallback>
-                      {myData.fullName.firstName.at(0)}
-                      {myData.fullName.lastName.at(0)}
-                    </AvatarFallback>
+                    <AvatarFallback>{fallBackName}</AvatarFallback>
                   </Avatar>
                   <div>
                     <h4 className="text-sm text-white">
@@ -98,21 +105,26 @@ const socialData = [
   {
     key: "1",
     name: "twitter",
+    bio: "🍀 With great power comes great responsibilities",
     username: socialLink.twitter.username,
+    imageUlr: `https://unavatar.io/x/elonmusk`,
     icon: <Twitter />,
   },
   {
     key: "2",
-    name: "telegram",
+    name: socialLink.telegram.name,
     username: socialLink.telegram.username,
-
+    bio: "🍀 With great power comes great responsibilities",
+    imageUlr: `https://unavatar.io/telegram/realkhusan`,
     icon: <Send />,
   },
   {
     key: "3",
     name: "linkedin",
     username: socialLink.linkedin.username,
-
+    bio: "🍀 With great power comes great responsibilities",
+    imageUlr:
+      "https://media.licdn.com/media/AAYQAQSOAAgAAQAAAAAAAB-zrMZEDXI2T62PSuT6kpB6qg.png",
     icon: <Linkedin />,
   },
 ];

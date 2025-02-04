@@ -27,6 +27,7 @@ export const socialLink = {
   telegram: {
     url: "https://www.t.me/realKhusan",
     username: "realKhusan",
+    name: "Khusan 🍀",
     joined: 2020,
     id: 896560162,
   },

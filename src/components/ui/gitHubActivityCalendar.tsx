@@ -135,7 +135,7 @@ const GitHubActivityCalendar: React.FC<GitHubActivityCalendarProps> = ({
   };
 
   return (
-    <div className="w-full max-w-6xl border bg-black p-4 rounded-lg">
+    <div className="w-full max-w-6xl border backdrop-blur-md p-4 rounded-lg">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">GitHub activity calendar</h2>
         <Select

@@ -1,8 +1,23 @@
 import { myData } from "@/constants/data";
 import { socialLink } from "@/constants/data";
+import Image from "next/image";
 export default function Hello() {
   return (
-    <div className="container grid grid-cols-1 lg:grid-cols-2 items-center h-full">
+    <div className="container relative  grid grid-cols-1 lg:grid-cols-2 items-center h-full">
+      <Image
+        src="/assets/hello_page/green.svg"
+        width={800}
+        height={700}
+        className="z-50 absolute -top-[100px] right-[100px]"
+        alt=""
+      />
+      <Image
+        src="/assets/hello_page/blue.svg"
+        width={800}
+        height={700}
+        className="z-50 absolute -bottom-[200px] right-0"
+        alt=""
+      />
       <div>
         <div className="mb-7">
           <h5 className="mb-2 text-white">Hi all . I am</h5>
