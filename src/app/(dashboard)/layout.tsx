@@ -1,3 +1,5 @@
+"use client";
+
 import { File, Folder, Tree } from "@/components/ui/file-tree";
 import {
   ResizableHandle,
@@ -10,14 +12,30 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { usePathname } from "next/navigation";
+import { useCallback, useState } from "react";
 
 export default function DashboardLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const pathname = usePathname();
+  const getAccordion = useCallback(() => {
+    if (pathname.includes("/contact-me")) {
+      return "contact-me";
+    } else if (pathname.includes("/about-me")) {
+      return "about-me";
+    } else if (pathname.includes("/projects")) {
+      return "projects";
+    }
+    return null;
+  }, [pathname]);
+  const [accordianTab, setAccordianTab] = useState<string | null>(
+    getAccordion()
+  );
   return (
     <ResizablePanelGroup direction="horizontal" className="min-h-full w-full">
       <ResizablePanel defaultSize={15} minSize={14}>
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="multiple" className="w-full">
           <AccordionItem value="item-1">
             <AccordionTrigger>Is it accessible?</AccordionTrigger>
             <AccordionContent>
@@ -89,56 +107,51 @@ export default function DashboardLayout({
 
 const ELEMENTS = [
   {
-    id: "1",
+    id: "2",
     isSelectable: true,
-    name: "src",
+    name: "appjjj",
     children: [
       {
-        id: "2",
+        id: "3",
         isSelectable: true,
-        name: "app",
-        children: [
-          {
-            id: "3",
-            isSelectable: true,
-            name: "layout.tsx",
-          },
-          {
-            id: "4",
-            isSelectable: true,
-            name: "page.tsx",
-          },
-        ],
+        name: "layout.tsx",
       },
       {
-        id: "5",
+        id: "4",
         isSelectable: true,
-        name: "components",
-        children: [
-          {
-            id: "6",
-            isSelectable: true,
-            name: "header.tsx",
-          },
-          {
-            id: "7",
-            isSelectable: true,
-            name: "footer.tsx",
-          },
-        ],
+        name: "page.tsx",
+      },
+    ],
+  },
+  {
+    id: "5",
+    isSelectable: true,
+    name: "components",
+    children: [
+      {
+        id: "6",
+        isSelectable: true,
+        name: "header.tsx",
       },
       {
-        id: "8",
+        id: "7",
         isSelectable: true,
-        name: "lib",
-        children: [
-          {
-            id: "9",
-            isSelectable: true,
-            name: "utils.ts",
-          },
-        ],
+        name: "footer.tsx",
+      },
+    ],
+  },
+  {
+    id: "8",
+    isSelectable: true,
+    name: "lib",
+    children: [
+      {
+        id: "9",
+        isSelectable: true,
+        name: "utils.ts",
       },
     ],
   },
 ];
+
+const accordianData = [{}];

@@ -8,15 +8,15 @@ export default function Hello() {
         src="/assets/hello_page/green.svg"
         width={800}
         height={700}
-        className="z-50 absolute -top-[100px] right-[100px]"
-        alt=""
+        className="z-50 absolute  -top-[100px] right-[100px] select-none pointer-events-none"
+        alt="effective-image-1"
       />
       <Image
         src="/assets/hello_page/blue.svg"
         width={800}
         height={700}
-        className="z-50 absolute -bottom-[200px] right-0"
-        alt=""
+        className="z-50 absolute -bottom-[200px] right-0  select-none pointer-events-none"
+        alt="effective-image-1"
       />
       <div>
         <div className="mb-7">

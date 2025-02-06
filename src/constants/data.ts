@@ -7,6 +7,7 @@ export const socialLink = {
   twitter: {
     url: "https://www.twitter.com/your-twitter",
     username: "realKhusan",
+    name: "Khusan Mirobidov",
     joined: 2020,
   },
   instagram: {

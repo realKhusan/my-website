@@ -76,9 +76,12 @@ button.addEventListener('click', () => {
 })`;
 
   return (
-    <ResizablePanelGroup direction="horizontal" className="min-h-full   w-full">
+    <ResizablePanelGroup
+      direction="horizontal"
+      className="min-h-full  min-w-full"
+    >
       <ResizablePanel defaultSize={45}>
-        <div className="p-5 mx-auto h-full  max-w-[400px] ">
+        <div className="p-5 mx-auto h-full   max-w-[400px] ">
           {isSendMessage ? (
             <div className="text-center h-full flex gap-5 flex-col justify-center items-center">
               <h1 className="text-3xl ">Thank you! 🤘 </h1>
@@ -102,7 +105,7 @@ button.addEventListener('click', () => {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>_name</FormLabel>
+                        <FormLabel>_name:</FormLabel>
                         <FormControl>
                           <Input {...field} />
                         </FormControl>
@@ -115,7 +118,7 @@ button.addEventListener('click', () => {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>_email</FormLabel>
+                        <FormLabel>_email:</FormLabel>
                         <FormControl>
                           <Input type="email" id="email" {...field} />
                         </FormControl>
@@ -128,7 +131,7 @@ button.addEventListener('click', () => {
                     name="messageI"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>_message</FormLabel>
+                        <FormLabel>_message:</FormLabel>
                         <FormControl>
                           <Textarea id="message" {...field} />
                         </FormControl>
