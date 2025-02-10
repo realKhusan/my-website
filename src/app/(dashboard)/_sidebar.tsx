@@ -8,6 +8,8 @@ import React from "react";
 import { File, Folder, Tree } from "@/components/ui/file-tree";
 import { usePathname } from "next/navigation";
 import { useCallback } from "react";
+import { Mail, Phone } from "lucide-react";
+import { myData } from "@/constants/data";
 interface IAccordianData {
   accorValue: string;
   accorTrigger: string;
@@ -102,7 +104,22 @@ const accordianData = {
     {
       accorValue: "value1",
       accorTrigger: "contacts",
-      accorContent: <p>contact-info</p>,
+      accorContent: (
+        <div className="space-y-2 *:flex *:items-center *:gap-3">
+          <div className="">
+            <span className="w-4">
+              <Mail size={"18"} className="" />
+            </span>
+            <p>{myData.email}</p>
+          </div>
+          <div className="">
+            <span className="w-4">
+              <Phone size={"18"} className="" />
+            </span>
+            <p>{myData.phone.number}</p>
+          </div>
+        </div>
+      ),
     },
     {
       accorValue: "value2",

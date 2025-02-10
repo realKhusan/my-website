@@ -1,6 +1,7 @@
 import { myData } from "@/constants/data";
 import { socialLink } from "@/constants/data";
 import Image from "next/image";
+import Link from "next/link";
 export default function Hello() {
   return (
     <div className="container relative   grid grid-cols-1 lg:grid-cols-2 items-center h-full">
@@ -37,7 +38,14 @@ export default function Hello() {
               <p>
                 <span className="text-purple-400">const</span>{" "}
                 <span className="text-teal-500">{item.variableName}</span> ={" "}
-                <span className="text-amber-600">{` "${item.value}"`}</span>
+                <Link
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-amber-600 hover:underline"
+                >
+                  <span>{` "${item.value}"`}</span>
+                </Link>
               </p>
             </div>
           );
@@ -54,29 +62,34 @@ const data = [
     commit: "my nummber",
     variableName: "telephoneNum",
     value: myData.phone.number,
+    link: `tel:${myData.phone.code}${myData.phone.number.replace(/\s+/g, "")}`,
   },
   {
     key: "email",
     commit: "my email",
     variableName: "email",
     value: myData.email,
+    link: `mailto:${myData.email}`,
   },
   {
     key: "githubLink",
     commit: "you can also see it on my github page",
     variableName: "githubLink",
     value: socialLink.github.url,
+    link: socialLink.github.url,
   },
   {
     key: "linkedin",
     commit: "you can  check may Linkedin page",
     variableName: "linkedin",
     value: socialLink.linkedin.url,
+    link: socialLink.linkedin.url,
   },
   {
     key: "telegram",
     commit: "you can message me",
     variableName: "telegram",
     value: socialLink.telegram.url,
+    link: socialLink.telegram.url,
   },
 ];
