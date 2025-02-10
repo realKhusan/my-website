@@ -107,7 +107,7 @@ const accordianData = {
     {
       accorValue: "value2",
       accorTrigger: "find-me-also-in",
-      accorContent: <p>asdasdsadasd</p>,
+      accorContent: <div>asdasdsadasd</div>,
     },
   ],
   projects: [
