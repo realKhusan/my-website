@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useMemo, useState } from "react";
 import { Tabs } from "./ui/tabs";
 import { usePathname, useRouter } from "next/navigation";
@@ -9,12 +8,12 @@ import { Menu } from "lucide-react";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "./ui/button";
+import Footer from "./footer";
 function Header() {
   const router = useRouter();
   const pathname = usePathname();
@@ -32,7 +31,7 @@ function Header() {
     ],
     []
   );
-
+  const fullName = `${myData.fullName.firstName}-${myData.fullName.lastName}`;
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId);
     router.push(`${tabId}`);
@@ -41,9 +40,7 @@ function Header() {
   return (
     <div className="flex justify-between border-b items-center sm:divide-x">
       <div className="px-5 py-3 border-r -mr-[1px]">
-        <h3 className="text-main text-nowrap lowercase">
-          {myData.fullName.firstName}-{myData.fullName.lastName}
-        </h3>
+        <h3 className="text-main text-nowrap lowercase">{fullName}</h3>
       </div>
       {isLargerThan("sm") && (
         <Tabs tabs={tabs} activeTab={activeTab} onTabClick={handleTabClick} />
@@ -56,14 +53,14 @@ function Header() {
                 <Menu />
               </Button>
             </SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetTitle>Are you absolutely sure?</SheetTitle>
-                <SheetDescription>
-                  This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
-                </SheetDescription>
+            <SheetContent className="flex flex-col w-full sm:w-[80%] ">
+              <SheetHeader className="mb-8">
+                <SheetTitle>{fullName}</SheetTitle>
               </SheetHeader>
+              <div className="border-t p-5 h-full flex-1">
+                <h1>lelelelelelelelele</h1>
+              </div>
+              <Footer />
             </SheetContent>
           </Sheet>
         </div>

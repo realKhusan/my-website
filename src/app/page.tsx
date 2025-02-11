@@ -1,22 +1,26 @@
+"use client";
+import MemoryGame from "@/components/games/memory-game";
 import { myData } from "@/constants/data";
 import { socialLink } from "@/constants/data";
+import { useScreenSize } from "@/hooks/use-screen-size";
 import Image from "next/image";
 import Link from "next/link";
 export default function Hello() {
+  const { isSmallerThan } = useScreenSize();
   return (
     <div className="container relative   grid grid-cols-1 lg:grid-cols-2 items-center h-full">
       <Image
         src="/assets/hello_page/green.svg"
         width={800}
         height={700}
-        className="z-50 absolute  -top-[100px] right-[100px] select-none pointer-events-none"
+        className="z-50 absolute -top-[20px] right-[20px]  md:-top-[100px] md:right-[100px] select-none pointer-events-none"
         alt="effective-image-1"
       />
       <Image
         src="/assets/hello_page/blue.svg"
         width={800}
         height={700}
-        className="z-50 absolute -bottom-[200px] right-0  select-none pointer-events-none"
+        className="z-50 absolute -bottom-[10px] md:-bottom-[200px] md:right-0  select-none pointer-events-none"
         alt="effective-image-1"
       />
       <div>
@@ -30,7 +34,7 @@ export default function Hello() {
 
         {data.map((item) => {
           return (
-            <div key={item.key} className="mb-2">
+            <div key={item.key} className="mb-2 text-sm md:text-lg">
               <p className="text-white/50">
                 {"// "}
                 {item.commit}
@@ -51,7 +55,7 @@ export default function Hello() {
           );
         })}
       </div>
-      <div className="flex justify-center items-center h-full"></div>
+      {!isSmallerThan("lg") && <MemoryGame />}
     </div>
   );
 }
