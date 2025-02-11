@@ -4,26 +4,16 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { fetchUserContributions } from "../../../utils/github-api";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/form/select";
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import dayjs from "dayjs";
 
 interface ContributionDay {
   contributionCount: number;
   date: string;
-}
-
-interface ContributionWeek {
-  contributionDays: ContributionDay[];
-}
-
-interface ContributionCalendar {
-  totalContributions: number;
-  weeks: ContributionWeek[];
 }
 
 interface GitHubActivityCalendarProps {
@@ -32,87 +22,138 @@ interface GitHubActivityCalendarProps {
 }
 
 const colorLevels = ["#13171A", "#0e4429", "#006d32", "#26a641", "#39d353"];
-const monthNames = [
-  "Yan",
-  "Fev",
-  "Mar",
-  "Apr",
-  "May",
-  "Iyn",
-  "Iyl",
-  "Avg",
-  "Sen",
-  "Okt",
-  "Noy",
-  "Dek",
-];
+const weekDays = ["Yak", "Mon", "Sesh", "Wed", "Pay", "Fri", "Shan"];
 
 const GitHubActivityCalendar: React.FC<GitHubActivityCalendarProps> = ({
   token,
   username,
 }) => {
-  const [calendar, setCalendar] = useState<ContributionCalendar | null>(null);
+  const [calendar, setCalendar] = useState<ContributionDay[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
-    fetchUserContributions(token, username, selectedYear)
-      .then(setCalendar)
+    const currentYear = new Date().getFullYear();
+    fetchUserContributions(token, username, currentYear)
+      .then((data) => {
+        const today = dayjs();
+        const startDate = today.subtract(3, "month").startOf("week");
+        const endDate = today;
+
+        const days: ContributionDay[] = [];
+        let currentDate = startDate;
+
+        while (
+          currentDate.isBefore(endDate) ||
+          currentDate.isSame(endDate, "day")
+        ) {
+          const contributionDay = data.weeks
+            .flatMap(
+              (week: { contributionDays: ContributionDay[] }) =>
+                week.contributionDays
+            )
+            .find(
+              (day: ContributionDay) =>
+                day.date === currentDate.format("YYYY-MM-DD")
+            );
+
+          days.push({
+            date: currentDate.format("YYYY-MM-DD"),
+            contributionCount: contributionDay
+              ? contributionDay.contributionCount
+              : 0,
+          });
+
+          currentDate = currentDate.add(1, "day");
+        }
+
+        setCalendar(days);
+      })
       .catch((err) => setError(err.message));
-  }, [token, username, selectedYear]);
+  }, [token, username]);
 
   if (error) {
     return <div className="text-red-500">Xatolik: {error}</div>;
   }
 
-  if (!calendar) {
+  if (calendar.length === 0) {
     return <div>Yuklanmoqda...</div>;
   }
 
   const getColor = (count: number) => {
     if (count === 0) return colorLevels[0];
     if (count < 2) return colorLevels[1];
-    if (count < 3) return colorLevels[2];
-    if (count < 4) return colorLevels[3];
+    if (count < 4) return colorLevels[2];
+    if (count < 8) return colorLevels[3];
     return colorLevels[4];
   };
 
   const renderMonths = () => {
-    const months = [];
-    for (let i = 0; i < 12; i++) {
-      const monthWidth = Math.floor(calendar.weeks.length / 12);
-      months.push(
-        <div
-          key={i}
-          className="text-center"
-          style={{ width: `${monthWidth * 15}px` }}
-        >
-          {monthNames[i]}
-        </div>
+    const months = Array.from(
+      new Set(calendar.map((day) => dayjs(day.date).format("MMM")))
+    );
+    const monthPositions = months.map((month) => {
+      const firstDay = calendar.findIndex(
+        (day) => dayjs(day.date).format("MMM") === month
       );
-    }
-    return <div className="flex justify-between mb-2">{months}</div>;
+      return { month, position: Math.floor(firstDay / 7) * 13 };
+    });
+
+    return (
+      <div className="flex mb-2 relative h-4">
+        {monthPositions.map(({ month, position }) => (
+          <div
+            key={month}
+            className="absolute text-xs text-gray-500"
+            style={{ left: `${position}px` }}
+          >
+            {month}
+          </div>
+        ))}
+      </div>
+    );
   };
 
   const renderCalendar = () => {
+    const weeks = Math.ceil(calendar.length / 7);
+
     return (
       <div className="flex">
-        <div>
-          {renderMonths()}
-          <div className="flex">
-            {calendar.weeks.map((week, weekIndex) => (
-              <div key={weekIndex} className="flex flex-col">
-                {week.contributionDays.map((day) => (
-                  <div
-                    key={day.date}
-                    className="w-3 aspect-square m-0.5 rounded-[2px]"
-                    style={{ backgroundColor: getColor(day.contributionCount) }}
-                    title={`${day.contributionCount} ta hissa ${day.date} sanasida`}
-                  />
-                ))}
-              </div>
-            ))}
-          </div>
+        <div className="flex flex-col gap-[3px] mr-2">
+          {weekDays.map((day, index) => (
+            <div
+              key={day}
+              className="h-[10px] text-xs mt-[3px] text-gray-500 leading-[10px]"
+            >
+              {index % 2 == 1 ? day : ""}
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-flow-col gap-[3px] grid-rows-7">
+          {Array.from({ length: weeks * 7 }).map((_, index) => {
+            const day = calendar[index];
+            return day ? (
+              <TooltipProvider key={day.date}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div
+                      className="size-[12px] rounded-[2px] m-[1px]  "
+                      style={{
+                        backgroundColor: getColor(day.contributionCount),
+                      }}
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>
+                      {day.contributionCount} ta hissa{" "}
+                      {dayjs(day.date).format("MMMM D")} sanasida
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            ) : (
+              <div key={index} className="w-[10px] h-[10px]" />
+            );
+          })}
         </div>
       </div>
     );
@@ -120,49 +161,38 @@ const GitHubActivityCalendar: React.FC<GitHubActivityCalendarProps> = ({
 
   const renderLegend = () => {
     return (
-      <div className="flex items-center mt-4">
-        <span className="mr-2 text-sm">Less</span>
+      <div className="flex items-center gap-1 text-xs text-gray-500">
+        <span>Less</span>
         {colorLevels.map((color, index) => (
           <div
             key={index}
-            className="w-3 h-3 mr-1 rounded-[2px]"
+            className="w-[10px] h-[10px] rounded-[2px]"
             style={{ backgroundColor: color }}
           />
         ))}
-        <span className="ml-2 text-sm">More</span>
+        <span>More</span>
       </div>
     );
   };
 
+  const totalContributions = calendar.reduce(
+    (sum, day) => sum + day.contributionCount,
+    0
+  );
+
   return (
-    <div className="w-full max-w-6xl border backdrop-blur-2xl bg-black/10 p-4 rounded-lg">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">GitHub activity calendar</h2>
-        <Select
-          value={selectedYear.toString()}
-          onValueChange={(value) => setSelectedYear(Number.parseInt(value))}
-        >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Yilni tanlang" />
-          </SelectTrigger>
-          <SelectContent>
-            {[...Array(2)].map((_, i) => {
-              const year = new Date().getFullYear() - i;
-              return (
-                <SelectItem key={year} value={year.toString()}>
-                  {year}
-                </SelectItem>
-              );
-            })}
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="overflow-x-auto">{renderCalendar()}</div>
-      <div className="flex justify-between">
-        <div className="mt-4">
-          {calendar.totalContributions} contributions in {dayjs().year()}
-        </div>
-        {renderLegend()}
+    <div className="w-full max-w-2xl border backdrop-blur-2xl bg-black/10 p-4 rounded-lg">
+      {renderMonths()}
+      {renderCalendar()}
+      <div className=" mt-4 text-[12px]">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div>{totalContributions} contributions in the last 3 months</div>
+            </TooltipTrigger>
+            <TooltipContent>{renderLegend()}</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
     </div>
   );

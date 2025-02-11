@@ -1,79 +1,60 @@
-import { useEffect, useState } from "react";
+"use client";
 
-// Define the possible screen sizes as a union type
-export type ScreenSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
+import { useState, useEffect } from "react";
 
-// Type-safe size order mapping
-const sizeOrder: Record<ScreenSize, number> = {
-  xs: 0,
-  sm: 1,
-  md: 2,
-  lg: 3,
-  xl: 4,
-  "2xl": 5,
-} as const;
+// Tailwind CSS breakpointlari
+const breakpoints = {
+  sm: 640,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+  "2xl": 1536,
+};
 
-class ComparableScreenSize {
-  constructor(private value: ScreenSize) {}
+type Breakpoint = keyof typeof breakpoints;
 
-  toString(): ScreenSize {
-    return this.value;
-  }
-
-  valueOf(): number {
-    return sizeOrder[this.value];
-  }
-
-  // Add type predicate methods for better TypeScript support
-  equals(other: ScreenSize): boolean {
-    return this.value === other;
-  }
-
-  lessThan(other: ScreenSize): boolean {
-    return this.valueOf() < sizeOrder[other];
-  }
-
-  greaterThan(other: ScreenSize): boolean {
-    return this.valueOf() > sizeOrder[other];
-  }
-
-  lessThanOrEqual(other: ScreenSize): boolean {
-    return this.valueOf() <= sizeOrder[other];
-  }
-
-  greaterThanOrEqual(other: ScreenSize): boolean {
-    return this.valueOf() >= sizeOrder[other];
-  }
-}
-
-const useScreenSize = (): ComparableScreenSize => {
-  const [screenSize, setScreenSize] = useState<ScreenSize>("xs");
+export function useScreenSize() {
+  const [screenSize, setScreenSize] = useState({
+    width: typeof window !== "undefined" ? window.innerWidth : 0,
+    height: typeof window !== "undefined" ? window.innerHeight : 0,
+  });
 
   useEffect(() => {
     const handleResize = () => {
-      const width = window.innerWidth;
-
-      if (width >= 1536) {
-        setScreenSize("2xl");
-      } else if (width >= 1280) {
-        setScreenSize("xl");
-      } else if (width >= 1024) {
-        setScreenSize("lg");
-      } else if (width >= 768) {
-        setScreenSize("md");
-      } else if (width >= 640) {
-        setScreenSize("sm");
-      } else {
-        setScreenSize("xs");
-      }
+      setScreenSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
     };
 
-    handleResize();
     window.addEventListener("resize", handleResize);
+    handleResize();
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  return new ComparableScreenSize(screenSize);
-};
+  const isBreakpoint = (breakpoint: Breakpoint) =>
+    screenSize.width >= breakpoints[breakpoint];
 
-export { useScreenSize };
+  const getBreakpoint = () => {
+    const currentBreakpoint = (Object.keys(breakpoints) as Breakpoint[])
+      .reverse()
+      .find(isBreakpoint);
+    return currentBreakpoint || "xs";
+  };
+
+  return {
+    width: screenSize.width,
+    height: screenSize.height,
+    isBreakpoint,
+    getBreakpoint,
+    isSmallerThan: (breakpoint: Breakpoint) =>
+      screenSize.width < breakpoints[breakpoint],
+    isLargerThan: (breakpoint: Breakpoint) =>
+      screenSize.width > breakpoints[breakpoint],
+    isSmallerOrEqual: (breakpoint: Breakpoint) =>
+      screenSize.width <= breakpoints[breakpoint],
+    isLargerOrEqual: (breakpoint: Breakpoint) =>
+      screenSize.width >= breakpoints[breakpoint],
+  };
+}
