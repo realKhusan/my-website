@@ -8,14 +8,13 @@ import Link from "next/link";
 export default function Hello() {
   const { isSmallerThan } = useScreenSize();
   return (
-    <div className=" relative px-4  grid grid-cols-1 lg:grid-cols-2 overflow-hidden items-center w-full h-full">
+    <div className="container relative  border-x border-dotted  grid grid-cols-1 lg:grid-cols-2 overflow-hidden items-center w-full h-full">
       <Image
         src="/assets/hello_page/green.svg"
         width={800}
         height={700}
         className="z-50 absolute select-none pointer-events-none object-cover
-         -left-[100px] top-0 
-          md:-top-[100px] md:right-[100px] "
+         -right-[100px] -top-[100px]"
         alt="effective-image-1"
       />
       <Image

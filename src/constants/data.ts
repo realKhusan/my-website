@@ -1,11 +1,15 @@
 export const socialLink = {
   facebook: {
-    url: "https://www.facebook.com/your-facebook",
+    get url() {
+      return `https://www.facebook.com/${this.username}`;
+    },
     username: "realKhusan",
     joined: 2020,
   },
   twitter: {
-    url: "https://www.twitter.com/realKhusan",
+    get url() {
+      return `https://www.twitter.com/${this.username}`;
+    },
     username: "realKhusan",
     name: "Khusan Mirobidov",
     joined: 2020,
@@ -18,55 +22,75 @@ export const socialLink = {
     joined: 2020,
   },
   linkedin: {
-    url: "https://www.linkedin.com/in/khusan-mirobidov",
+    get url() {
+      return `https://www.linkedin.com/in/${this.username}`;
+    },
     username: "khusan-mirobidov",
     name: "Khusan Mirobidov",
     joined: 2020,
   },
   github: {
-    url: "https://www.github.com/realKhusan",
+    get url() {
+      return `https://www.github.com/${this.username}`;
+    },
     username: "realKhusan",
     joined: 2020,
   },
   telegram: {
-    url: "https://www.t.me/realKhusan",
+    get url() {
+      return `https://www.t.me/${this.username}`;
+    },
     username: "realKhusan",
     name: "Khusan 🍀",
     joined: 2020,
     id: 896560162,
   },
   leetCode: {
-    url: "https://www.leetcode.com/your-leetCode",
+    get url() {
+      return `https://www.leetcode.com/${this.username}`;
+    },
     username: "realKhusan",
     joined: 2020,
   },
   telegramChannael: {
-    url: "https://www.t.me/your-telegramChannael",
+    get url() {
+      return `https://www.t.me/${this.username}`;
+    },
     username: "realKhusan",
     joined: 2020,
   },
   medium: {
-    url: "https://www.medium.com/your-medium",
+    get url() {
+      return `https://www.medium.com/${this.username}`;
+    },
     username: "realKhusan",
     joined: 2020,
   },
   tumblr: {
-    url: "https://www.tumblr.com/your-tumblr",
+    get url() {
+      return `https://www.tumblr.com/${this.username}`;
+    },
     username: "realKhusan",
     joined: 2020,
   },
   pinterest: {
-    url: "https://www.pinterest.com/your-pinterest",
+    get url() {
+      return `https://www.pinterest.com/${this.username}`;
+    },
     username: "realKhusan",
     joined: 2020,
   },
   mastodon: {
-    url: "https://www.mastodon.com/your-mastodon",
+    get url() {
+      return `https://www.mastodon.com/${this.username}`;
+    },
     username: "realKhusan",
     joined: 2020,
   },
   twitch: {
-    url: "https://www.twitch.com/your-twitch",
+    get url() {
+      return `https://www.twitch.com/${this.username}`;
+    },
     username: "realKhusan",
     joined: 2020,
   },
