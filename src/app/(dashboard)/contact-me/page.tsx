@@ -25,6 +25,7 @@ import dayjs from "dayjs";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/form/input";
 import { Textarea } from "@/components/ui/form/textarea";
+import { useScreenSize } from "@/hooks/use-screen-size";
 const FormSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
@@ -40,6 +41,7 @@ const FormSchema = z.object({
 function ContactMe() {
   const [isSendMessage, setIsSendMessage] = useState(false);
   const { toast } = useToast();
+  const { isLargerThan } = useScreenSize();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -81,9 +83,9 @@ button.addEventListener('click', () => {
       className="min-h-full  min-w-full"
     >
       <ResizablePanel defaultSize={45}>
-        <div className="p-5 mx-auto h-full   max-w-[400px] ">
+        <div className="p-5 mx-auto md:h-full   sm:max-w-[400px] ">
           {isSendMessage ? (
-            <div className="text-center h-full flex gap-5 flex-col justify-center items-center">
+            <div className="text-center  sm:max-w-[400px] mt-[50px] sm:mt-0 h-full flex gap-5 flex-col justify-center items-center">
               <h1 className="text-3xl ">Thank you! 🤘 </h1>
               <h2 className="text-lg">
                 Your message has been accepted. You will recieve answer really
@@ -94,7 +96,7 @@ button.addEventListener('click', () => {
               </Button>
             </div>
           ) : (
-            <div className="mt-[100px]">
+            <div className=" mt-[50px] md:mt-[100px]">
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
@@ -146,12 +148,16 @@ button.addEventListener('click', () => {
           )}
         </div>
       </ResizablePanel>
-      <ResizableHandle />
-      <ResizablePanel defaultSize={55}>
-        <div className="flex mt-[100px]  items-center p-5 h-full">
-          <CodeBlock code={sampleCode} />
-        </div>
-      </ResizablePanel>
+      {isLargerThan("lg") && (
+        <>
+          <ResizableHandle />
+          <ResizablePanel defaultSize={55}>
+            <div className="md:flex mt-[50px] md:mt-[100px]  md:items-center p-5 md:h-full">
+              <CodeBlock code={sampleCode} />
+            </div>
+          </ResizablePanel>
+        </>
+      )}
     </ResizablePanelGroup>
   );
 }
