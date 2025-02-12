@@ -19,9 +19,9 @@ const Tab = ({ label, isActive, onClick, className }: TabProps) => {
       className={cn(
         className,
         isActive
-          ? "border-b-[3px] text-white   border-b-purple-500 pb-2"
+          ? "border-b-[3px] text-white   border-b-purple-500"
           : "cursor-pointer  hover:bg-white/10 ",
-        "transition-all flex border-r text-nowrap items-center h-full px-5 py-3 text-sm font-medium"
+        "transition-all flex border-r text-nowrap items-center min-h-full px-5 py-3 text-sm font-medium"
       )}
       onClick={onClick}
     >

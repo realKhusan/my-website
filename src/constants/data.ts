@@ -16,7 +16,7 @@ export const socialLink = {
     joined: 2020,
   },
   linkedin: {
-    url: "https://www.linkedin.com/khusan-mirobidov",
+    url: "https://www.linkedin.com/in/khusan-mirobidov",
     username: "realKhusan",
     joined: 2020,
   },

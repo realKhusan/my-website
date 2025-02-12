@@ -42,9 +42,11 @@ function Header() {
       <div className="px-5 py-3 border-r -mr-[1px]">
         <h3 className="text-main text-nowrap lowercase">{fullName}</h3>
       </div>
+
       {isLargerThan("sm") && (
         <Tabs tabs={tabs} activeTab={activeTab} onTabClick={handleTabClick} />
       )}
+
       {isSmallerThan("sm") && (
         <div className="flex-1 px-5 flex justify-end">
           <Sheet>

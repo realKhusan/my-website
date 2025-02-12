@@ -17,8 +17,8 @@ function Footer() {
     0
   )}${myData.fullName.lastName.at(0)}`;
   return (
-    <div className="flex border-t divide-x">
-      <div className="px-5 py-3 text-nowrap flex-1 sm:!basis-0  flex-grow">
+    <div className="flex border-t">
+      <div className="px-5 py-3 text-nowrap  sm:!basis-0  flex-grow sm:flex-grow-0">
         <h3>find me in :</h3>
       </div>
       <div className="flex  sm:justify-between  h-full sm:flex-shrink-0 sm:flex-1  divide-x">
