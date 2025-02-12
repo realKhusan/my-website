@@ -5,19 +5,22 @@ export const socialLink = {
     joined: 2020,
   },
   twitter: {
-    url: "https://www.twitter.com/your-twitter",
+    url: "https://www.twitter.com/realKhusan",
     username: "realKhusan",
     name: "Khusan Mirobidov",
     joined: 2020,
   },
   instagram: {
-    url: "https://www.instagram.com/your-instagram",
+    get url() {
+      return `https://www.instagram.com/${this.username}`;
+    },
     username: "realKhusan",
     joined: 2020,
   },
   linkedin: {
     url: "https://www.linkedin.com/in/khusan-mirobidov",
-    username: "realKhusan",
+    username: "khusan-mirobidov",
+    name: "Khusan Mirobidov",
     joined: 2020,
   },
   github: {

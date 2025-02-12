@@ -11,6 +11,7 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import GitHubActivityCalendar from "./ui/gitHubActivityCalendar";
 import { Button } from "./ui/button";
+import Link from "next/link";
 function Footer() {
   const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN || "";
   const fallBackName = `${myData.fullName.firstName.at(
@@ -87,7 +88,9 @@ function Footer() {
                     </h3>
                   </div>
                 </div>
-                <Button>Visit</Button>
+                <Link href={socialLink.github.url}>
+                  <Button>Visit</Button>
+                </Link>
               </div>
               <GitHubActivityCalendar
                 token={GITHUB_TOKEN}

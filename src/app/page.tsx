@@ -8,19 +8,23 @@ import Link from "next/link";
 export default function Hello() {
   const { isSmallerThan } = useScreenSize();
   return (
-    <div className="container relative   grid grid-cols-1 lg:grid-cols-2 items-center h-full">
+    <div className=" relative px-4  grid grid-cols-1 lg:grid-cols-2 overflow-hidden items-center w-full h-full">
       <Image
         src="/assets/hello_page/green.svg"
         width={800}
         height={700}
-        className="z-50 absolute -top-[20px] right-[20px]  md:-top-[100px] md:right-[100px] select-none pointer-events-none"
+        className="z-50 absolute select-none pointer-events-none object-cover
+         -left-[100px] top-0 
+          md:-top-[100px] md:right-[100px] "
         alt="effective-image-1"
       />
       <Image
         src="/assets/hello_page/blue.svg"
         width={800}
         height={700}
-        className="z-50 absolute -bottom-[10px] md:-bottom-[200px] md:right-0  select-none pointer-events-none"
+        className="z-50 absolute select-none pointer-events-none object-cover
+         bottom-[100px]
+         md:-bottom-[200px] md:right-0"
         alt="effective-image-1"
       />
       <div>
@@ -34,7 +38,7 @@ export default function Hello() {
 
         {data.map((item) => {
           return (
-            <div key={item.key} className="mb-2 text-sm md:text-lg">
+            <div key={item.key} className="mb-2 text-sm sm:text-lg">
               <p className="text-white/50">
                 {"// "}
                 {item.commit}
@@ -46,7 +50,7 @@ export default function Hello() {
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-amber-600 hover:underline"
+                  className="text-amber-600 hover:underline text-nowrap"
                 >
                   <span>{` "${item.value}"`}</span>
                 </Link>

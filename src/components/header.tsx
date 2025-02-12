@@ -17,6 +17,7 @@ import Footer from "./footer";
 function Header() {
   const router = useRouter();
   const pathname = usePathname();
+  const [openSheet, setOpenSheet] = useState(false);
   const [activeTab, setActiveTab] = useState(pathname);
   const tabs = useMemo(
     () => [
@@ -33,6 +34,7 @@ function Header() {
   );
   const fullName = `${myData.fullName.firstName}-${myData.fullName.lastName}`;
   const handleTabClick = (tabId: string) => {
+    setOpenSheet(false);
     setActiveTab(tabId);
     router.push(`${tabId}`);
   };
@@ -49,9 +51,13 @@ function Header() {
 
       {isSmallerThan("sm") && (
         <div className="flex-1 px-5 flex justify-end">
-          <Sheet>
+          <Sheet open={openSheet} onOpenChange={setOpenSheet}>
             <SheetTrigger asChild>
-              <Button className="border-none  m-r-2" variant="outline">
+              <Button
+                onClick={() => setOpenSheet(true)}
+                className="border-none  m-r-2"
+                variant="outline"
+              >
                 <Menu />
               </Button>
             </SheetTrigger>
@@ -59,8 +65,16 @@ function Header() {
               <SheetHeader className="mb-8">
                 <SheetTitle>{fullName}</SheetTitle>
               </SheetHeader>
-              <div className="border-t p-5 h-full flex-1">
-                <h1>lelelelelelelelele</h1>
+              <div className="border-t h-full flex-1">
+                {tabs.map((item) => (
+                  <div
+                    key={item.id}
+                    className="hover:cursor-pointer px-5 py-3 border-b text-white font-thin  hover:bg-white/10 transition-all"
+                    onClick={() => handleTabClick(item.id)}
+                  >
+                    {item.label}
+                  </div>
+                ))}
               </div>
               <Footer />
             </SheetContent>
