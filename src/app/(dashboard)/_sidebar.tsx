@@ -1,15 +1,18 @@
+"use client";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import React from "react";
-import { File, Folder, Tree } from "@/components/ui/file-tree";
+import React, { useState } from "react";
+// import { File, Folder, Tree } from "@/components/ui/file-tree";
 import { usePathname } from "next/navigation";
 import { useCallback } from "react";
 import { Mail, Phone } from "lucide-react";
 import { myData } from "@/constants/data";
+import { Label } from "@/components/ui/form/label";
+import { Checkbox } from "@/components/ui/checkbox";
 interface IAccordianData {
   accorValue: string;
   accorTrigger: string;
@@ -40,59 +43,110 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+const projectsData = [
+  {
+    label: "React",
+    value: "react",
+  },
+  {
+    label: "Html",
+    value: "html",
+  },
+  {
+    label: "CSS",
+    value: "css",
+  },
+  {
+    label: "Shadcn/ui",
+    value: "shadcn-ui",
+  },
+  {
+    label: "Tailwindui",
+    value: "tailwindui",
+  },
+  {
+    label: "AntD",
+    value: "antd",
+  },
+];
+
+function Projects() {
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const handleCheckboxChange = (value: string) => {
+    setSelectedValues((prev) =>
+      prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value]
+    );
+  };
+  return (
+    <div className="space-y-2">
+      {projectsData.map((item) => (
+        <div key={item.value} className="flex items-center space-x-4">
+          <Checkbox
+            value={item.value}
+            id={item.value}
+            checked={selectedValues.includes(item.value)}
+            onCheckedChange={() => handleCheckboxChange(item.value)}
+          />
+          <Label htmlFor={item.value}>{item.label}</Label>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 const accordianData = {
   aboutMe: [
     {
       accorValue: "value1",
       accorTrigger: "personal-info",
-      accorContent: (
-        <Tree
-          className="p-2 overflow-hidden"
-          initialSelectedId="7"
-          initialExpandedItems={[
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-          ]}
-        >
-          <Folder value="2" element="app">
-            <File value="3">
-              <p>layout.tsx</p>
-            </File>
-            <File value="4">
-              <p>page.tsx</p>
-            </File>
-          </Folder>
-          <Folder value="5" element="components">
-            <Folder value="6" element="ui">
-              <File value="7">
-                <p>button.tsx</p>
-              </File>
-            </Folder>
-            <File value="8">
-              <p>header.tsx</p>
-            </File>
-            <File value="9">
-              <p>footer.tsx</p>
-            </File>
-          </Folder>
-          <Folder value="10" element="lib">
-            <File value="11">
-              <p>utils.ts</p>
-            </File>
-          </Folder>
-        </Tree>
-      ),
+      accorContent:
+        // <Tree
+        //   className="p-2 overflow-hidden"
+        //   initialSelectedId="7"
+        //   initialExpandedItems={[
+        //     "1",
+        //     "2",
+        //     "3",
+        //     "4",
+        //     "5",
+        //     "6",
+        //     "7",
+        //     "8",
+        //     "9",
+        //     "10",
+        //     "11",
+        //   ]}
+        // >
+        //   <Folder value="2" element="app">
+        //     <File value="3">
+        //       <p>layout.tsx</p>
+        //     </File>
+        //     <File value="4">
+        //       <p>page.tsx</p>
+        //     </File>
+        //   </Folder>
+        //   <Folder value="5" element="components">
+        //     <Folder value="6" element="ui">
+        //       <File value="7">
+        //         <p>button.tsx</p>
+        //       </File>
+        //     </Folder>
+        //     <File value="8">
+        //       <p>header.tsx</p>
+        //     </File>
+        //     <File value="9">
+        //       <p>footer.tsx</p>
+        //     </File>
+        //   </Folder>
+        //   <Folder value="10" element="lib">
+        //     <File value="11">
+        //       <p>utils.ts</p>
+        //     </File>
+        //   </Folder>
+        // </Tree>
+        "s",
     },
     {
       accorValue: "value2",
@@ -131,7 +185,8 @@ const accordianData = {
     {
       accorValue: "value1",
       accorTrigger: "projects",
-      accorContent: <p>project-info</p>,
+      accorContent: <Projects />,
     },
   ],
 };
+export default Sidebar;
