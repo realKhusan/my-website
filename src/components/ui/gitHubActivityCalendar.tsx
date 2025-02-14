@@ -23,6 +23,21 @@ interface GitHubActivityCalendarProps {
 
 const colorLevels = ["#13171A", "#0e4429", "#006d32", "#26a641", "#39d353"];
 const weekDays = ["Yak", "Mon", "Sesh", "Wed", "Pay", "Fri", "Shan"];
+const renderLegend = () => {
+  return (
+    <div className="flex items-center gap-1 text-xs text-gray-500">
+      <span>Less</span>
+      {colorLevels.map((color, index) => (
+        <div
+          key={index}
+          className="w-[10px] h-[10px] rounded-[2px]"
+          style={{ backgroundColor: color }}
+        />
+      ))}
+      <span>More</span>
+    </div>
+  );
+};
 
 const GitHubActivityCalendar: React.FC<GitHubActivityCalendarProps> = ({
   token,
@@ -71,22 +86,6 @@ const GitHubActivityCalendar: React.FC<GitHubActivityCalendarProps> = ({
       .catch((err) => setError(err.message));
   }, [token, username]);
 
-  if (error) {
-    return <div className="text-red-500">Xatolik: {error}</div>;
-  }
-
-  if (calendar.length === 0) {
-    return <div>Yuklanmoqda...</div>;
-  }
-
-  const getColor = (count: number) => {
-    if (count === 0) return colorLevels[0];
-    if (count < 2) return colorLevels[1];
-    if (count < 4) return colorLevels[2];
-    if (count < 8) return colorLevels[3];
-    return colorLevels[4];
-  };
-
   const renderMonths = () => {
     const months = Array.from(
       new Set(calendar.map((day) => dayjs(day.date).format("MMM")))
@@ -111,6 +110,61 @@ const GitHubActivityCalendar: React.FC<GitHubActivityCalendarProps> = ({
         ))}
       </div>
     );
+  };
+
+  if (error) {
+    return <div className="text-red-500">Error: {error}</div>;
+  }
+
+  if (calendar.length === 0) {
+    return (
+      <div className="animate-pulse">
+        <div className="w-full max-w-2xl border backdrop-blur-2xl bg-black/10 p-4 rounded-lg">
+          <div className="mt-4 text-[12px]">
+            <div className="flex">
+              <div className="flex flex-col gap-[3px] mr-2">
+                {weekDays.map((day, index) => (
+                  <div
+                    key={day}
+                    className="h-[10px] text-xs mt-[3px] text-gray-500 leading-[10px]"
+                  >
+                    {index % 2 == 1 ? day : ""}
+                  </div>
+                ))}
+              </div>
+              <div className="grid grid-flow-col gap-[3px] grid-rows-7">
+                {Array.from({ length: 97 }).map((_, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="size-[12px] rounded-[2px] m-[1px] bg-[#13171A]"
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            <div className=" mt-4 text-[12px]">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div>0 contributions in the last 3 months</div>
+                  </TooltipTrigger>
+                  <TooltipContent>{renderLegend()}</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const getColor = (count: number) => {
+    if (count === 0) return colorLevels[0];
+    if (count < 2) return colorLevels[1];
+    if (count < 4) return colorLevels[2];
+    if (count < 8) return colorLevels[3];
+    return colorLevels[4];
   };
 
   const renderCalendar = () => {
@@ -144,8 +198,8 @@ const GitHubActivityCalendar: React.FC<GitHubActivityCalendarProps> = ({
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>
-                      {day.contributionCount} ta hissa{" "}
-                      {dayjs(day.date).format("MMMM D")} sanasida
+                      {day.contributionCount} contribution on{" "}
+                      {dayjs(day.date).format("MMMM D")}
                     </p>
                   </TooltipContent>
                 </Tooltip>
@@ -155,22 +209,6 @@ const GitHubActivityCalendar: React.FC<GitHubActivityCalendarProps> = ({
             );
           })}
         </div>
-      </div>
-    );
-  };
-
-  const renderLegend = () => {
-    return (
-      <div className="flex items-center gap-1 text-xs text-gray-500">
-        <span>Less</span>
-        {colorLevels.map((color, index) => (
-          <div
-            key={index}
-            className="w-[10px] h-[10px] rounded-[2px]"
-            style={{ backgroundColor: color }}
-          />
-        ))}
-        <span>More</span>
       </div>
     );
   };
