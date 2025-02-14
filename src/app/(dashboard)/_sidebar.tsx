@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import React, { useState } from "react";
+import React from "react";
 // import { File, Folder, Tree } from "@/components/ui/file-tree";
 import { usePathname } from "next/navigation";
 import { useCallback } from "react";
@@ -13,6 +13,7 @@ import { Mail, Phone } from "lucide-react";
 import { myData } from "@/constants/data";
 import { Label } from "@/components/ui/form/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { UseSctore } from "@/store/store";
 interface IAccordianData {
   accorValue: string;
   accorTrigger: string;
@@ -71,14 +72,15 @@ const projectsData = [
 ];
 
 function Projects() {
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const { setProjectChecked, projectsChecked } = UseSctore();
   const handleCheckboxChange = (value: string) => {
-    setSelectedValues((prev) =>
-      prev.includes(value)
-        ? prev.filter((item) => item !== value)
-        : [...prev, value]
+    setProjectChecked(() =>
+      projectsChecked.includes(value)
+        ? projectsChecked.filter((item: string) => item !== value)
+        : [...projectsChecked, value]
     );
   };
+  console.log(projectsChecked, "projects checked");
   return (
     <div className="space-y-2">
       {projectsData.map((item) => (
@@ -86,7 +88,7 @@ function Projects() {
           <Checkbox
             value={item.value}
             id={item.value}
-            checked={selectedValues.includes(item.value)}
+            checked={projectsChecked.includes(item.value)}
             onCheckedChange={() => handleCheckboxChange(item.value)}
           />
           <Label htmlFor={item.value}>{item.label}</Label>
