@@ -13,7 +13,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "./ui/button";
-import Footer from "./footer";
 function Header() {
   const router = useRouter();
   const pathname = usePathname();
@@ -50,7 +49,7 @@ function Header() {
       )}
 
       {isSmallerThan("sm") && (
-        <div className="flex-1 px-5 flex justify-end">
+        <div className="flex-1  flex justify-end">
           <Sheet open={openSheet} onOpenChange={setOpenSheet}>
             <SheetTrigger asChild>
               <Button
@@ -76,7 +75,6 @@ function Header() {
                   </div>
                 ))}
               </div>
-              <Footer />
             </SheetContent>
           </Sheet>
         </div>

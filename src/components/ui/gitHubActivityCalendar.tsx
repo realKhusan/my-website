@@ -219,7 +219,7 @@ const GitHubActivityCalendar: React.FC<GitHubActivityCalendarProps> = ({
   );
 
   return (
-    <div className="w-full max-w-2xl border backdrop-blur-2xl bg-black/10 p-4 rounded-lg">
+    <div className="w-full  border backdrop-blur-2xl bg-black/10 p-4 rounded-lg">
       {renderMonths()}
       {renderCalendar()}
       <div className=" mt-4 text-[12px]">

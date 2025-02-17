@@ -1,8 +1,6 @@
 export const socialLink = {
   facebook: {
-    get url() {
-      return `https://www.facebook.com/${this.username}`;
-    },
+    url: `https://www.facebook.com/profile.php?id=61569829932745`,
     username: "realKhusan",
     joined: 2020,
   },
@@ -18,7 +16,7 @@ export const socialLink = {
     get url() {
       return `https://www.instagram.com/${this.username}`;
     },
-    username: "realKhusan",
+    username: "realkhusan",
     joined: 2020,
   },
   linkedin: {
@@ -42,29 +40,26 @@ export const socialLink = {
     },
     username: "realKhusan",
     name: "Khusan 🍀",
-    joined: 2020,
     id: 896560162,
   },
   leetCode: {
     get url() {
-      return `https://www.leetcode.com/${this.username}`;
+      return `https://leetcode.com/u/${this.username}`;
     },
-    username: "realKhusan",
-    joined: 2020,
+    username: "khusan038",
   },
   telegramChannael: {
     get url() {
       return `https://www.t.me/${this.username}`;
     },
-    username: "realKhusan",
+    username: "jr_frontend",
     joined: 2020,
   },
   medium: {
     get url() {
       return `https://www.medium.com/${this.username}`;
     },
-    username: "realKhusan",
-    joined: 2020,
+    username: "@husanmirobidov",
   },
   tumblr: {
     get url() {
@@ -77,8 +72,8 @@ export const socialLink = {
     get url() {
       return `https://www.pinterest.com/${this.username}`;
     },
-    username: "realKhusan",
-    joined: 2020,
+    username: "theKhusan",
+    joined: 2024,
   },
   mastodon: {
     get url() {
@@ -90,6 +85,20 @@ export const socialLink = {
   twitch: {
     get url() {
       return `https://www.twitch.com/${this.username}`;
+    },
+    username: "realKhusan",
+    joined: 2020,
+  },
+  discord: {
+    get url() {
+      return `https://www.discord.com/${this.username}`;
+    },
+    username: "thekhusan",
+    joined: 2020,
+  },
+  monkeytype: {
+    get url() {
+      return `https://monkeytype.com/profile/${this.username}`;
     },
     username: "realKhusan",
     joined: 2020,

@@ -14,9 +14,12 @@ const breakpoints = {
 type Breakpoint = keyof typeof breakpoints;
 
 export function useScreenSize() {
-  const [screenSize, setScreenSize] = useState({
-    width: typeof window !== "undefined" ? window.innerWidth : 0,
-    height: typeof window !== "undefined" ? window.innerHeight : 0,
+  const [screenSize, setScreenSize] = useState<{
+    width: number | null;
+    height: number | null;
+  }>({
+    width: null, // Boshlang‘ich qiymat `null` bo‘lishi kerak
+    height: null,
   });
 
   useEffect(() => {
@@ -27,16 +30,18 @@ export function useScreenSize() {
       });
     };
 
-    window.addEventListener("resize", handleResize);
+    // Sahifa yuklanganda to‘g‘ri qiymat olish
     handleResize();
 
+    window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const isBreakpoint = (breakpoint: Breakpoint) =>
-    screenSize.width >= breakpoints[breakpoint];
+    screenSize.width !== null && screenSize.width >= breakpoints[breakpoint];
 
   const getBreakpoint = () => {
+    if (screenSize.width === null) return "loading"; // Server tarafda `loading` qaytarish
     const currentBreakpoint = (Object.keys(breakpoints) as Breakpoint[])
       .reverse()
       .find(isBreakpoint);
@@ -49,12 +54,12 @@ export function useScreenSize() {
     isBreakpoint,
     getBreakpoint,
     isSmallerThan: (breakpoint: Breakpoint) =>
-      screenSize.width < breakpoints[breakpoint],
+      screenSize.width !== null && screenSize.width < breakpoints[breakpoint],
     isLargerThan: (breakpoint: Breakpoint) =>
-      screenSize.width > breakpoints[breakpoint],
+      screenSize.width !== null && screenSize.width > breakpoints[breakpoint],
     isSmallerOrEqual: (breakpoint: Breakpoint) =>
-      screenSize.width <= breakpoints[breakpoint],
+      screenSize.width !== null && screenSize.width <= breakpoints[breakpoint],
     isLargerOrEqual: (breakpoint: Breakpoint) =>
-      screenSize.width >= breakpoints[breakpoint],
+      screenSize.width !== null && screenSize.width >= breakpoints[breakpoint],
   };
 }

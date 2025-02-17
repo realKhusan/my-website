@@ -9,16 +9,82 @@ import React from "react";
 // import { File, Folder, Tree } from "@/components/ui/file-tree";
 import { usePathname } from "next/navigation";
 import { useCallback } from "react";
-import { Mail, Phone } from "lucide-react";
-import { myData } from "@/constants/data";
+import { ExternalLinkIcon, Mail, Phone } from "lucide-react";
+import { myData, socialLink } from "@/constants/data";
 import { Label } from "@/components/ui/form/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { UseSctore } from "@/store/store";
+import Link from "next/link";
 interface IAccordianData {
   accorValue: string;
   accorTrigger: string;
   accorContent: React.ReactNode;
 }
+
+const ContactMe = () => {
+  return (
+    <div className="space-y-2 *:flex *:items-center *:gap-3">
+      <Link
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:underline"
+        href={`mailto:${myData.email}`}
+      >
+        <span className="w-4">
+          <Mail size={"18"} className="" />
+        </span>{" "}
+        <p>{myData.email}</p>
+      </Link>
+
+      <Link
+        target="_blank"
+        href={`tel:${myData.phone.code}${myData.phone.number.replace(
+          /\s+/g,
+          ""
+        )}`}
+        className="hover:underline"
+        rel="noopener noreferrer"
+      >
+        <span className="w-4">
+          <Phone size={"18"} className="" />
+        </span>
+        <p>{myData.phone.number}</p>
+      </Link>
+    </div>
+  );
+};
+
+const FindMeAlso = [
+  {
+    label: "Telegram Channel",
+    url: socialLink.telegramChannael.url,
+  },
+  {
+    label: "Monkeytype profile",
+    url: socialLink.monkeytype.url,
+  },
+  {
+    label: "Medium profile",
+    url: socialLink.medium.url,
+  },
+  {
+    label: "Pinterest profile",
+    url: socialLink.pinterest.url,
+  },
+  {
+    label: "Discord chat",
+    url: socialLink.discord.url,
+  },
+  {
+    label: "Leetcode profile",
+    url: socialLink.leetCode.url,
+  },
+  {
+    label: "Facebook profile",
+    url: socialLink.facebook.url,
+  },
+];
+
 function Sidebar() {
   const pathname = usePathname();
   const getAccordion = useCallback(() => {
@@ -153,34 +219,36 @@ const accordianData = {
     {
       accorValue: "value2",
       accorTrigger: "contacts",
-      accorContent: <p>Skills</p>,
+      accorContent: <ContactMe />,
     },
   ],
   contactMe: [
     {
       accorValue: "value1",
       accorTrigger: "contacts",
-      accorContent: (
-        <div className="space-y-2 *:flex *:items-center *:gap-3">
-          <div className="">
-            <span className="w-4">
-              <Mail size={"18"} className="" />
-            </span>
-            <p>{myData.email}</p>
-          </div>
-          <div className="">
-            <span className="w-4">
-              <Phone size={"18"} className="" />
-            </span>
-            <p>{myData.phone.number}</p>
-          </div>
-        </div>
-      ),
+      accorContent: <ContactMe />,
     },
     {
       accorValue: "value2",
       accorTrigger: "find-me-also-in",
-      accorContent: <div>asdasdsadasd</div>,
+      accorContent: (
+        <div className="space-y-3">
+          {FindMeAlso.map((item) => (
+            <Link
+              target="_blank"
+              key={item.url}
+              rel="noopener noreferrer"
+              className="flex gap-3 hover:underline"
+              href={item.url}
+            >
+              <span className="w-4">
+                <ExternalLinkIcon size={18} />
+              </span>
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      ),
     },
   ],
   projects: [
