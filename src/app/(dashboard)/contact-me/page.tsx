@@ -6,7 +6,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import CodeBlock from "@/components/ui/code-block";
 import { z } from "zod";
@@ -26,6 +26,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/form/input";
 import { Textarea } from "@/components/ui/form/textarea";
 import { useScreenSize } from "@/hooks/use-screen-size";
+import { ToastAction } from "@/components/ui/toast";
 const FormSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
@@ -51,18 +52,44 @@ function ContactMe() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-    setIsSendMessage(true);
-    form.reset();
-  }
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    try {
+      const res = await axios.post(
+        "https://0d66cdb5761cc26d.mokky.dev/messages",
+        data,
+        { headers: { "Content-Type": "application/json" } }
+      );
+      if (res.status === 201) {
+        console.log("About to show success toast");
+        toast({
+          title: "You submitted the following values:",
+          description: (
+            <pre className="mt-2 w-[340px]  rounded-md bg-black/70 p-4">
+              <code className=" text-white whitespace-pre-wrap break-all">
+                {JSON.stringify(data, null, 2)}
+              </code>
+            </pre>
+          ),
+        });
+        setIsSendMessage(true);
+        form.reset();
+      } else {
+        toast({
+          title: "Error",
+          variant: "destructive",
+          description: "Message not sent, please try again.",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
+      }
+    } catch (e) {
+      toast({
+        title: "error",
+        variant: "destructive",
+        description: String(e),
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    }
+  };
 
   const sampleCode = `const button = document.querySelector('#sendBtn');
 
@@ -91,7 +118,7 @@ button.addEventListener('click', () => {
                 Your message has been accepted. You will recieve answer really
                 soon!
               </h2>
-              <Button onClick={() => setIsSendMessage(false)}>
+              <Button variant="main" onClick={() => setIsSendMessage(false)}>
                 send-new-message
               </Button>
             </div>
@@ -141,7 +168,9 @@ button.addEventListener('click', () => {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit">Submit</Button>
+                  <Button variant={"main"} type="submit">
+                    submit-message
+                  </Button>
                 </form>
               </Form>
             </div>

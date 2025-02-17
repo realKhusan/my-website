@@ -10,6 +10,9 @@ export default {
   ],
   theme: {
     extend: {
+      backdropBlur: {
+        popover: "7px",
+      },
       colors: {
         main: "#a855f7",
         background: "hsl(var(--background))",
