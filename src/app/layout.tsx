@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en" className="dark:bg-black">
       <body
         className={`
-          dark flex flex-col h-[100vh] overflow-hidden max-h-[100vh] ${geistSans.variable} ${geistMono.variable} antialiased`}
+          dark flex flex-col h-[100dvh] overflow-hidden max-h-[100vh] ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header />
         <div className="flex-grow">{children}</div>
