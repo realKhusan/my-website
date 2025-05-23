@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import { Heart, Star, Sun, Moon, Cloud, Flower2, type LucideIcon } from "lucide-react"
 
 type MemoryCard = {
@@ -66,17 +65,17 @@ export default function MemoryGame() {
       if (firstCard.icon === secondCard.icon) {
         // Match found
         setTimeout(() => {
-          setCards(
-            cards.map((card, index) =>
-              index === firstIndex || index === secondIndex ? { ...card, isMatched: true } : card,
-            ),
+          const updatedCards = cards.map((card, index) =>
+            index === firstIndex || index === secondIndex ? { ...card, isMatched: true } : card,
           )
+          setCards(updatedCards)
           setFlippedIndexes([])
-          setMatches((m) => m + 1)
+          const newMatches = matches + 1
+          setMatches(newMatches)
           setIsChecking(false)
 
-          // Check for game completion
-          if (matches === cards.length / 2 - 1) {
+          // Check for game completion - fixed the condition
+          if (newMatches === cards.length / 2) {
             setNotification({ message: "🎉 Congratulations! You've found all the matches! 🎈", visible: true })
           }
         }, 500)
@@ -120,44 +119,38 @@ export default function MemoryGame() {
 
       <div className="grid grid-cols-3 gap-4 md:gap-6 p-6 rounded-xl bg-indigo-950/50 backdrop-blur-sm">
         {cards.map((card, index) => (
-          <motion.div
-            key={card.id}
-            initial={{ rotateY: 0 }}
-            animate={{
-              rotateY: card.isMatched || flippedIndexes.includes(index) ? 180 : 0,
-            }}
-            transition={{ duration: 0.3 }}
-            className="perspective-1000"
-          >
-            <Card
-              className={`relative w-24 h-24 md:w-32 md:h-32 cursor-pointer transform-style-3d transition-all duration-300 ${
-                card.isMatched
-                  ? "bg-indigo-900/50 border-indigo-400/50"
-                  : flippedIndexes.includes(index)
-                    ? "bg-indigo-800/50 border-indigo-500/50"
-                    : "bg-indigo-950 border-indigo-800 hover:border-indigo-600 hover:bg-indigo-900/80"
-              }`}
+          <div key={card.id} className="h-24 w-24 md:h-32 md:w-32 [perspective:1000px]">
+            <motion.div
+              initial={{ rotateY: 0 }}
+              animate={{
+                rotateY: card.isMatched || flippedIndexes.includes(index) ? 180 : 0,
+              }}
+              transition={{ duration: 0.3 }}
+              className="relative w-full h-full cursor-pointer [transform-style:preserve-3d]"
               onClick={() => handleCardClick(index)}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-indigo-500/5 to-white/5" />
-              <AnimatePresence>
-                {(card.isMatched || flippedIndexes.includes(index)) && (
-                  <motion.div
-                    initial={{ opacity: 0, rotateY: 180 }}
-                    animate={{ opacity: 1, rotateY: 180 }}
-                    exit={{ opacity: 0, rotateY: 180 }}
-                    className="absolute inset-0 flex items-center justify-center backface-hidden"
-                  >
-                    <card.icon
-                      className={`w-12 h-12 ${
-                        card.isMatched ? `${card.color} filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]` : card.color
-                      }`}
-                    />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </Card>
-          </motion.div>
+              {/* Card Back */}
+              <div
+                className={`absolute inset-0 rounded-md border flex items-center justify-center [backface-visibility:hidden] ${card.isMatched
+                  ? "bg-indigo-900/50 border-indigo-400/50"
+                  : "bg-indigo-950 border-indigo-800 hover:border-indigo-600 hover:bg-indigo-900/80"
+                  }`}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-indigo-500/5 to-white/5 rounded-md" />
+              </div>
+
+              {/* Card Front */}
+              <div
+                className={`absolute inset-0 rounded-md border flex items-center justify-center [backface-visibility:hidden] [transform:rotateY(180deg)] ${card.isMatched ? "bg-indigo-900/50 border-indigo-400/50" : "bg-indigo-800/50 border-indigo-500/50"
+                  }`}
+              >
+                <card.icon
+                  className={`w-12 h-12 ${card.isMatched ? `${card.color} filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]` : card.color
+                    }`}
+                />
+              </div>
+            </motion.div>
+          </div>
         ))}
       </div>
 
@@ -169,12 +162,19 @@ export default function MemoryGame() {
       >
         Start New Game
       </Button>
-      {notification.visible && (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-purple-900 text-purple-100 border border-purple-700 px-4 py-2 rounded-md shadow-lg">
-          {notification.message}
-        </div>
-      )}
+
+      <AnimatePresence>
+        {notification.visible && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-purple-900 text-purple-100 border border-purple-700 px-4 py-2 rounded-md shadow-lg"
+          >
+            {notification.message}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
-

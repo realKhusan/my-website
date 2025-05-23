@@ -58,7 +58,7 @@ export default function Hello() {
           );
         })}
       </div>
-      {/* {!isSmallerThan("lg") && <MemoryGame />} */}
+      {!isSmallerThan("lg") && <MemoryGame />}
     </div>
   );
 }
