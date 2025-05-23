@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState } from "react"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Heart, Star, Sun, Moon, Cloud, Flower2, type LucideIcon } from "lucide-react"
 
@@ -12,9 +12,8 @@ type MemoryCard = {
   color: string
 }
 
-type Notification = {
-  message: string
-  visible: boolean
+interface MemoryGameProps {
+  onGameComplete?: () => void
 }
 
 const createCards = () => {
@@ -36,12 +35,11 @@ const createCards = () => {
   return cards.sort(() => Math.random() - 0.5)
 }
 
-export default function MemoryGame() {
+export default function MemoryGame({ onGameComplete }: MemoryGameProps) {
   const [cards, setCards] = useState<MemoryCard[]>(createCards())
   const [flippedIndexes, setFlippedIndexes] = useState<number[]>([])
-  const [matches, setMatches] = useState(0)
   const [isChecking, setIsChecking] = useState(false)
-  const [notification, setNotification] = useState<Notification>({ message: "", visible: false })
+  const [matches, setMatches] = useState(0)
 
   const handleCardClick = (clickedIndex: number) => {
     // Prevent clicking if already checking or card is already matched
@@ -74,9 +72,9 @@ export default function MemoryGame() {
           setMatches(newMatches)
           setIsChecking(false)
 
-          // Check for game completion - fixed the condition
+          // Check if all matches are found
           if (newMatches === cards.length / 2) {
-            setNotification({ message: "🎉 Congratulations! You've found all the matches! 🎈", visible: true })
+            onGameComplete?.()
           }
         }, 500)
       } else {
@@ -90,36 +88,23 @@ export default function MemoryGame() {
   }
 
   const resetGame = () => {
-    setCards(createCards())
+    // First, make sure all cards are closed by clearing flipped indexes
     setFlippedIndexes([])
-    setMatches(0)
     setIsChecking(false)
-    setNotification({ message: "", visible: false })
+
+    // Wait for card closing animation to complete
+    setTimeout(() => {
+      // Then completely reset the game with new randomized cards
+      setCards(createCards())
+      setMatches(0)
+    }, 400) // Wait for card flip animation to complete (300ms) plus a little extra
   }
 
-  useEffect(() => {
-    if (notification.visible) {
-      const timer = setTimeout(() => {
-        setNotification({ message: "", visible: false })
-      }, 3000)
-      return () => clearTimeout(timer)
-    }
-  }, [notification.visible])
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 space-y-8 bg-gradient-to-br from-purple-950 via-indigo-950 to-slate-950">
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-300 via-pink-300 to-indigo-300 text-transparent bg-clip-text">
-          Memory Match Game
-        </h1>
-        <p className="text-indigo-200">
-          Matches found: {matches} of {cards.length / 2}
-        </p>
-      </div>
-
-      <div className="grid grid-cols-3 gap-4 md:gap-6 p-6 rounded-xl bg-indigo-950/50 backdrop-blur-sm">
+    <div className="flex flex-col items-center justify-center p-4 space-y-8">
+      <div className="grid grid-cols-3 gap-3 md:gap-5 p-6 rounded-xl bg-green-500/20 border border-green-500/30 backdrop-blur-sm">
         {cards.map((card, index) => (
-          <div key={card.id} className="h-24 w-24 md:h-32 md:w-32 [perspective:1000px]">
+          <div key={card.id} className="h-24 w-24 md:h-22 md:w-22">
             <motion.div
               initial={{ rotateY: 0 }}
               animate={{
@@ -153,7 +138,6 @@ export default function MemoryGame() {
           </div>
         ))}
       </div>
-
       <Button
         onClick={resetGame}
         variant="outline"
@@ -162,19 +146,6 @@ export default function MemoryGame() {
       >
         Start New Game
       </Button>
-
-      <AnimatePresence>
-        {notification.visible && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-purple-900 text-purple-100 border border-purple-700 px-4 py-2 rounded-md shadow-lg"
-          >
-            {notification.message}
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   )
 }

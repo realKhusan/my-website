@@ -68,7 +68,7 @@ function Header() {
                 {tabs.map((item) => (
                   <div
                     key={item.id}
-                    className="hover:cursor-pointer px-5 py-3 border-b text-white font-thin  hover:bg-white/10 transition-all"
+                    className="hover:cursor-pointer px-5 py-3 cursor-pointer border-b text-white font-thin  hover:bg-white/10 transition-all"
                     onClick={() => handleTabClick(item.id)}
                   >
                     {item.label}
