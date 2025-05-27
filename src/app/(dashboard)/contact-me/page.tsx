@@ -22,11 +22,9 @@ import {
 import { useForm } from "react-hook-form";
 
 import dayjs from "dayjs";
-import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/form/input";
 import { Textarea } from "@/components/ui/form/textarea";
 import { useScreenSize } from "@/hooks/use-screen-size";
-import { ToastAction } from "@/components/ui/toast";
 const FormSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
@@ -41,7 +39,6 @@ const FormSchema = z.object({
 
 function ContactMe() {
   const [isSendMessage, setIsSendMessage] = useState(false);
-  const { toast } = useToast();
   const { isLargerThan } = useScreenSize();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -61,33 +58,13 @@ function ContactMe() {
       );
       if (res.status === 201) {
         console.log("About to show success toast");
-        toast({
-          title: "You submitted the following values:",
-          description: (
-            <pre className="mt-2 w-[340px]  rounded-md bg-black/70 p-4">
-              <code className=" text-white whitespace-pre-wrap break-all">
-                {JSON.stringify(data, null, 2)}
-              </code>
-            </pre>
-          ),
-        });
         setIsSendMessage(true);
         form.reset();
       } else {
-        toast({
-          title: "Error",
-          variant: "destructive",
-          description: "Message not sent, please try again.",
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
-        });
+
       }
     } catch (e) {
-      toast({
-        title: "error",
-        variant: "destructive",
-        description: String(e),
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      });
+      console.log(`${e}`)
     }
   };
 
