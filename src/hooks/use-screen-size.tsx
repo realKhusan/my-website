@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 
-// Tailwind CSS breakpointlari
 const breakpoints = {
   sm: 640,
   md: 768,
@@ -18,7 +17,7 @@ export function useScreenSize() {
     width: number | null;
     height: number | null;
   }>({
-    width: null, // Boshlang‘ich qiymat `null` bo‘lishi kerak
+    width: null,
     height: null,
   });
 
@@ -30,7 +29,6 @@ export function useScreenSize() {
       });
     };
 
-    // Sahifa yuklanganda to‘g‘ri qiymat olish
     handleResize();
 
     window.addEventListener("resize", handleResize);

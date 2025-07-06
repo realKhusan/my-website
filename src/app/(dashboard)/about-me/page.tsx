@@ -1,7 +1,94 @@
 import React from "react";
 
 function AboutMe() {
-  return <div>salom</div>;
+  return <div className="">
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+    <div>salom</div>
+  </div>;
 }
 
 export default AboutMe;

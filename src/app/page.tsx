@@ -14,7 +14,6 @@ export default function Hello() {
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
 
   useEffect(() => {
-    // Set window size for confetti
     setWindowSize({
       width: window.innerWidth,
       height: window.innerHeight,
@@ -33,15 +32,14 @@ export default function Hello() {
 
   const handleGameComplete = () => {
     setShowConfetti(true)
-    // Hide confetti after 5 seconds
     setTimeout(() => {
       setShowConfetti(false)
     }, 5000)
   }
 
   return (
-    <>
-      <div className="container relative border-x border-dotted grid grid-cols-1 lg:grid-cols-2 overflow-hidden items-center w-full h-full">
+    < >
+      <div className="container pt-10 md:pt-0 relative md:border-x md:border-dotted grid grid-cols-1 lg:grid-cols-2 overflow-hidden items-center w-full h-full">
         <Image
           src="/assets/hello_page/green.svg"
           width={800}
@@ -62,10 +60,10 @@ export default function Hello() {
         <div>
           <div className="mb-7">
             <h5 className="mb-2 text-white">Hi all . I am</h5>
-            <h1 className="text-5xl mb-2 text-white">
+            <h1 className=" text-4xl md:text-5xl mb-2 text-white">
               {myData.fullName.firstName} {myData.fullName.lastName}
             </h1>
-            <h2 className="text-main text-3xl">{">"} Front-end developer</h2>
+            <h2 className="text-main text-2xl md:text-3xl">{">"} Front-end developer</h2>
           </div>
 
           {data.map((item) => {
@@ -82,7 +80,7 @@ export default function Hello() {
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-amber-600 hover:underline text-nowrap"
+                    className="text-amber-600  hover:scale-105 underline text-nowrap"
                   >
                     <span>{` "${item.value}"`}</span>
                   </Link>
@@ -93,8 +91,6 @@ export default function Hello() {
         </div>
         {!isSmallerThan("lg") && <MemoryGame onGameComplete={handleGameComplete} />}
       </div>
-
-      {/* Confetti container dan tashqarida */}
       {showConfetti && (
         <Confetti width={windowSize.width} height={windowSize.height} recycle={false} numberOfPieces={500} />
       )}

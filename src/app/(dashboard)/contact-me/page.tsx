@@ -84,10 +84,10 @@ button.addEventListener('click', () => {
   return (
     <ResizablePanelGroup
       direction="horizontal"
-      className="min-h-full  min-w-full"
+      className="min-h-full min-w-full"
     >
       <ResizablePanel defaultSize={45}>
-        <div className="p-5 mx-auto md:h-full   sm:max-w-[400px] ">
+        <div className="p-5 mx-auto md:h-full sm:max-w-[400px] ">
           {isSendMessage ? (
             <div className="text-center  sm:max-w-[400px] mt-[50px] sm:mt-0 h-full flex gap-5 flex-col justify-center items-center">
               <h1 className="text-3xl ">Thank you! 🤘 </h1>

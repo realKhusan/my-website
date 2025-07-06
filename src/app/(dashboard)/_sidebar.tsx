@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/form/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { UseSctore } from "@/store/store";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 interface IAccordianData {
   accorValue: string;
   accorTrigger: string;
@@ -84,7 +85,7 @@ const FindMeAlso = [
   },
 ];
 
-function Sidebar() {
+function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
   const getAccordion = useCallback(() => {
     if (pathname.includes("/contact-me")) {
@@ -97,15 +98,18 @@ function Sidebar() {
     return "contactMe";
   }, [pathname]);
   return (
-    <Accordion type="multiple" className="w-full">
-      {getAccordion() !== null &&
-        accordianData[getAccordion()]?.map((item: IAccordianData) => (
-          <AccordionItem key={item.accorValue} value={item.accorValue}>
-            <AccordionTrigger>{item.accorTrigger}</AccordionTrigger>
-            <AccordionContent>{item.accorContent}</AccordionContent>
-          </AccordionItem>
-        ))}
-    </Accordion>
+    <div className={cn("w-full md:border-r", className)
+    } >
+      <Accordion type="multiple" className="w-full">
+        {getAccordion() !== null &&
+          accordianData[getAccordion()]?.map((item: IAccordianData) => (
+            <AccordionItem key={item.accorValue} value={item.accorValue}>
+              <AccordionTrigger >{item.accorTrigger}</AccordionTrigger>
+              <AccordionContent>{item.accorContent}</AccordionContent>
+            </AccordionItem>
+          ))}
+      </Accordion></div >
+
   );
 }
 
@@ -113,6 +117,14 @@ const projectsData = [
   {
     label: "React",
     value: "react",
+  },
+  {
+    label: "Nextjs",
+    value: "nextjs",
+  },
+  {
+    label: "Vite",
+    value: "vite",
   },
   {
     label: "Html",
@@ -127,12 +139,16 @@ const projectsData = [
     value: "shadcn-ui",
   },
   {
-    label: "Tailwindui",
-    value: "tailwindui",
+    label: "Tailwindcss",
+    value: "tailwindcss",
   },
   {
     label: "AntD",
     value: "antd",
+  },
+  {
+    label: "Mui",
+    value: "mui",
   },
 ];
 

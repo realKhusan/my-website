@@ -18,7 +18,7 @@ function Footer() {
     0
   )}${myData.fullName.lastName.at(0)}`;
   return (
-    <div className="flex border-y">
+    <footer className="flex border-y">
       <div className="px-5 py-3 text-nowrap  sm:!basis-0  flex-grow sm:flex-grow-0">
         <h3>find me in :</h3>
       </div>
@@ -62,11 +62,11 @@ function Footer() {
             );
           })}
         </div>
-        <div className="">
+        <div className=" -m-l-[1px]">
           <Popover>
             <PopoverTrigger>
               <div className="px-5 py-3 flex gap-2 hover:text-main">
-                <h3 className=" hidden sm:block -m-l-[1px]">
+                <h3 className="hidden sm:block ">
                   @{socialLink.github.username}
                 </h3>
                 <Github />
@@ -107,7 +107,7 @@ function Footer() {
           </Popover>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }
 

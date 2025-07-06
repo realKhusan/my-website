@@ -13,7 +13,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "./ui/button";
-function Header() {
+import { cn } from "@/lib/utils";
+function Header({ className }: { className?: string }) {
   const router = useRouter();
   const pathname = usePathname();
   const [openSheet, setOpenSheet] = useState(false);
@@ -39,7 +40,7 @@ function Header() {
   };
   const { isLargerThan, isSmallerThan } = useScreenSize();
   return (
-    <div className="flex justify-between border-b items-center sm:divide-x">
+    <header className={cn("flex justify-between border-b items-center sm:divide-x z-50 bg-background", className)}>
       <div className="px-5 py-3 border-r -mr-[1px]">
         <h3 className="text-main text-nowrap lowercase">{fullName}</h3>
       </div>
@@ -79,7 +80,7 @@ function Header() {
           </Sheet>
         </div>
       )}
-    </div>
+    </header>
   );
 }
 
